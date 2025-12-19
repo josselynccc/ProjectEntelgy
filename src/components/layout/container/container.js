@@ -1,5 +1,6 @@
 import '../header/header.js';
 import '../footer/footer.js';
+import styles from './container.css?inline';
 export class Container extends HTMLElement {
     constructor() {
         super();
@@ -8,25 +9,7 @@ export class Container extends HTMLElement {
     connectedCallback() {
         this.shadowRoot.innerHTML = `
             <style>
-                :host {
-                    width: 100%;
-                    display: block;
-                    min-height: 100vh;
-                    font-family: Arial, sans-serif;
-                }
-                .layout {
-                    display: flex;
-                    min-height: calc(100vh - 100px);
-                    justify-content: space-between;
-                    flex-direction: column;
-                    padding: 50px 0 50px 0;
-                }
-                .slot-wrapper {
-                    flex: 1;
-                    background-color: #f5f7fa;
-                    padding: 20px;
-                    border-radius: 8px;
-                }
+                ${styles}
             </style>
             <div class="layout">
                 <app-header></app-header>

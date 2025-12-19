@@ -1,3 +1,4 @@
+import styles from './menu.css?inline';
 export class MenuItem extends HTMLElement {
     constructor() {
         super();
@@ -8,31 +9,7 @@ export class MenuItem extends HTMLElement {
         const link = this.getAttribute('link') || '#';
         this.shadowRoot.innerHTML = `
             <style>
-                li {
-                    list-style: none;
-                    margin: 0 5px;
-                    font-family: Arial, sans-serif;
-                    display: inline-block;
-                }
-                a {
-                    text-decoration: none;
-                    color: white;
-                    padding: 8px 16px;
-                    border-radius: 4px;
-                    transition: all 0.3s ease;
-                    display: inline-block;
-                    font-weight: bold;
-                }
-                a:hover {
-                    background-color: #1b3551ff;
-                    color: white;
-                    transform: translateY(-2px);
-                    box-shadow: 0 4px 6px rgba(0,0,0,0.1);
-                }
-                a:active {
-                    transform: translateY(0);
-                    box-shadow: none;
-                }
+                ${styles}
             </style>
             <li>
                 <a href="${link}">${label}</a>

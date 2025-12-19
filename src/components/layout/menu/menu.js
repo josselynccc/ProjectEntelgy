@@ -14,8 +14,6 @@ export class Menu extends HTMLElement {
         ).join('');
 
         this.shadowRoot.innerHTML = `
-            <style>
-            </style>
             <ul>
                 ${itemsHTML}
             </ul>
