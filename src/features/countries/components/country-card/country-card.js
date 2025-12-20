@@ -21,6 +21,8 @@ export class CountryCard extends HTMLElement {
 
         this._countryModal = null;
         this._isOpeningModal = false;
+
+        this._unsubscribeFavorites = null;
     }
 
     static get observedAttributes() {
@@ -149,7 +151,14 @@ export class CountryCard extends HTMLElement {
         }
     }
 
+    subscribeToFavorites() {
+        this._unsubscribeFavorites = FavoriteStore.subscribe(() => {
+            this.updateFavoriteButton();
+        });
+    }
+
     connectedCallback() {
+        this.subscribeToFavorites();
         this.render();
         this.setupEventListeners();
     }

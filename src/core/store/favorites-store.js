@@ -1,5 +1,15 @@
 const FavoriteStore = {
     _favorites: [],
+    _listeners: new Set(),
+
+    subscribe(listener) {
+        this._listeners.add(listener);
+        return () => this._listeners.delete(listener);
+    },
+
+    _notify() {
+        this._listeners.forEach(listener => listener());
+    },
 
     getAll() {
         return [...this._favorites];
@@ -17,12 +27,14 @@ const FavoriteStore = {
                 flag: country.flag
             });
             this._save();
+            this._notify();
         }
     },
 
     remove(countryId) {
         this._favorites = this._favorites.filter(fav => fav.id !== countryId);
         this._save();
+        this._notify();
     },
 
     toggle(country) {
@@ -46,6 +58,7 @@ const FavoriteStore = {
                 this._favorites = [];
             }
         }
+        this._notify();
     }
 };
 
