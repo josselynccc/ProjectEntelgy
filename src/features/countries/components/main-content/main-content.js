@@ -64,14 +64,18 @@ export class MainContent extends HTMLElement {
                 ` : `
                     ${this.countries.map((country, index) => {
                         const data = country.cardData || country;
+                        const modalData = country.modalData || country;
                         
                         const jsonStr = JSON.stringify(data);
                         const escaped = jsonStr.replace(/"/g, '&quot;');
-                        
+
+                        const jsonStrModal = JSON.stringify(modalData);
+                        const escapedModal = jsonStrModal.replace(/"/g, '&quot;');
                         return `
                             <app-country-card 
                                 data-index="${index}"
                                 data-country="${escaped}"
+                                data-country-modal="${escapedModal}"
                             ></app-country-card>
                         `;
                     }).join('')}

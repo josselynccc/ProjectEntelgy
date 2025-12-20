@@ -18,10 +18,13 @@ export class CountryCard extends HTMLElement {
 
         this._needUpdate = false;
         this._updateScheduled = false;
+
+        this._countryModal = null;
+        this._isOpeningModal = false;
     }
 
     static get observedAttributes() {
-        return ['data-country'];
+        return ['data-country', 'data-country-modal'];
     }
     
     attributeChangedCallback(name, oldValue, newValue) {
@@ -29,10 +32,17 @@ export class CountryCard extends HTMLElement {
         
         if (name === 'data-country' && newValue) {
             try {
-                const data = JSON.parse(newValue);
-                this.country = data;
+                this.country = JSON.parse(newValue);
             } catch (error) {
                 console.warn('Error parsing country data:', error);
+            }
+        }
+
+        if (name === 'data-country-modal' && newValue) {
+            try {
+                this._countryModal = JSON.parse(newValue);
+            } catch (error) {
+                console.warn('Error parsing modal data:', error);
             }
         }
     }
@@ -80,14 +90,53 @@ export class CountryCard extends HTMLElement {
     }
 
     showDetails() {
-        this.dispatchEvent(new CustomEvent('show-details', {
-            bubbles: true,
-            composed: true,
-            detail: {
-                country: this._country,
-                isFavorite: this._isFavorite
+        if (this._isOpeningModal) {
+            return;
+        }
+        
+        if (!this._countryModal) {
+            return;
+        }
+        
+        this._isOpeningModal = true;
+        
+        if (!customElements.get('country-modal')) {
+            import('../country-modal/country-modal.js').then(() => {
+                this.openModal();
+            }).catch(error => {
+                this._isOpeningModal = false;
+            });
+        } else {
+            this.openModal();
+        }
+    }
+
+    async openModal() {
+        try {
+            const existingModal = document.querySelector('country-modal');
+            if (existingModal) {
+                existingModal.remove();
             }
-        }));
+            
+            const modal = document.createElement('country-modal');
+            document.body.appendChild(modal);
+            
+            this._isOpeningModal = false;
+            
+            setTimeout(() => {
+                if (typeof modal.open === 'function') {
+                    modal.open(this._countryModal, this._isFavorite);
+                } else {
+                    modal.setAttribute('data-country', JSON.stringify(this._countryModal));
+                    modal.setAttribute('data-is-favorite', this._isFavorite.toString());
+                    modal.style.display = 'block';
+                }
+            }, 10);
+            
+        } catch (error) {
+            alert(`Error al cargar información de ${this._country.name}`);
+            this._isOpeningModal = false;
+        }
     }
 
     connectedCallback() {
@@ -139,6 +188,8 @@ export class CountryCard extends HTMLElement {
         const shadow = this.shadowRoot;
         if (!shadow) return;
         
+        this.removeEventListeners();
+
         shadow.addEventListener('click', (e) => {
             const target = e.target;
             
@@ -152,6 +203,16 @@ export class CountryCard extends HTMLElement {
                 this.showDetails();
             }
         });
+    }
+
+    removeEventListeners() {
+        const shadow = this.shadowRoot;
+        if (!shadow) return;
+        
+        if (this._clickHandler) {
+            shadow.removeEventListener('click', this._clickHandler);
+            this._clickHandler = null;
+        }
     }
 
     renderSkeleton() {

@@ -11,7 +11,6 @@ export class Card extends HTMLElement {
     }
     
     render() {
-        console.log('CSS content:', style);
         this.shadowRoot.innerHTML = `
             <style>${style}</style>
             <article class="card" part="card">
