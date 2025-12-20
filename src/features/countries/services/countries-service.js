@@ -16,6 +16,7 @@ export class CountryService {
 
     transformCountryData(apiData) {
         const cardData = {
+            id: apiData.cca3,
             flag: apiData.flags?.svg,
             name: apiData.name?.common,
             capital: apiData.capital?.[0],

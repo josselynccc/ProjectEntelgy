@@ -1,5 +1,6 @@
 import styles from './country-card.css?inline';
 import '../..//../../components/ui/card/card.js';
+import FavoriteStore from '../../../../core/store/favorites-store.js';
 export class CountryCard extends HTMLElement {
     constructor() {
         super();
@@ -11,9 +12,8 @@ export class CountryCard extends HTMLElement {
             languages: {},
             capital : '',
             area: 0,
+            id: ''
         }
-
-        this._isFavorite = false;
         this._isLoading = true
 
         this._needUpdate = false;
@@ -50,10 +50,6 @@ export class CountryCard extends HTMLElement {
     get country() {
         return this._country;
     }
-
-    get favorite() {
-        return this._isFavorite;
-    }
     
     set country(data) {
         if (typeof data !== 'object') return;
@@ -64,20 +60,34 @@ export class CountryCard extends HTMLElement {
         this.scheduleUpdate();
     }
 
-    set favoriteCountry(isFav) {
-        if (this._isFavorite === isFav) return;
-        this._isFavorite = isFav;
-        this._needUpdate = true;
-        this.scheduleUpdate();
+    isFavorite() {
+        return this._country.id ? FavoriteStore.isFavorite(this._country.id) : false;
+    }
+    
+    toggleFavorite() {
+        console.log('Toggling favorite for country:', this._country);
+        if (this._country.id) {
+            FavoriteStore.toggle({
+                id: this._country.id,
+                name: this._country.name,
+                flag: this._country.flag,
+                capital: this._country.capital,
+                population: this._country.population,
+                region: this._country.region
+            });
+            this.updateFavoriteButton();
+        }
+    }
 
-        this.dispatchEvent(new CustomEvent('favorite-changed', {
-            detail: { 
-                country: this._country,
-                isFavorite: this._isFavorite 
-            },
-            bubbles: true,
-            composed: true,
-        }));
+    updateFavoriteButton() {
+        const button = this.shadowRoot.querySelector('.favorite-btn');
+        if (button) {
+            const isFavorite = this.isFavorite();
+            button.innerHTML = isFavorite ? '❤️' : '🤍';
+            button.setAttribute('aria-label', 
+                isFavorite ? 'Remove from favorites' : 'Add to favorites'
+            );
+        }
     }
 
     formatNumber(num) {
@@ -125,10 +135,10 @@ export class CountryCard extends HTMLElement {
             
             setTimeout(() => {
                 if (typeof modal.open === 'function') {
-                    modal.open(this._countryModal, this._isFavorite);
+                    modal.open(this._countryModal, this.isFavorite());
                 } else {
                     modal.setAttribute('data-country', JSON.stringify(this._countryModal));
-                    modal.setAttribute('data-is-favorite', this._isFavorite.toString());
+                    modal.setAttribute('data-is-favorite', this.isFavorite().toString());
                     modal.style.display = 'block';
                 }
             }, 10);
@@ -190,19 +200,21 @@ export class CountryCard extends HTMLElement {
         
         this.removeEventListeners();
 
-        shadow.addEventListener('click', (e) => {
+        this._clickHandler = (e) => {
             const target = e.target;
             
             if (target.classList.contains('favorite-btn')) {
                 e.stopPropagation();
-                this.favoriteCountry = !this._isFavorite;
+                this.toggleFavorite();
             }
             
             if (target.classList.contains('country-title')) {
                 e.stopPropagation();
                 this.showDetails();
             }
-        });
+        };
+        
+        shadow.addEventListener('click', this._clickHandler);
     }
 
     removeEventListeners() {
@@ -244,6 +256,8 @@ export class CountryCard extends HTMLElement {
     }
 
     renderWithData() {
+        const isFavorite = this.isFavorite();
+
         this.shadowRoot.innerHTML = `
             <style>${styles}</style>
             
@@ -269,7 +283,7 @@ export class CountryCard extends HTMLElement {
                                 ${this._country.name}
                             </h2>
                             <button class="favorite-btn">
-                                ${this._isFavorite ? '❤️' : '🤍'}
+                                ${isFavorite ? '❤️' : '🤍'}
                             </button>
                         </div>
                         ${this._country.capital ? 
