@@ -14,7 +14,7 @@ a {
     font-weight: bold;
 }
 a:hover {
-    background-color: #1b3551ff;
+    background-color: rgb(176, 81, 136);
     color: white;
     transform: translateY(-2px);
     box-shadow: 0 4px 6px rgba(0,0,0,0.1);

@@ -1,4 +1,4 @@
-import style from './card.css?inline';
+import style from './card.css?raw';
 
 export class Card extends HTMLElement {
     constructor() {
@@ -11,6 +11,7 @@ export class Card extends HTMLElement {
     }
     
     render() {
+        console.log('CSS content:', style);
         this.shadowRoot.innerHTML = `
             <style>${style}</style>
             <article class="card" part="card">
