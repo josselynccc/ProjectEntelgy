@@ -1,4 +1,4 @@
-import { ApiClient } from '../../../core/services/api.js';
+import { ApiClient } from '@core/services/api.js';
 export class CountryService {
     constructor() {
         this.api = new ApiClient('https://restcountries.com/v3.1');

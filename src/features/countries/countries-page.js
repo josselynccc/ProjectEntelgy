@@ -1,6 +1,6 @@
-import '../../components/layout/container/container.js';
-import '../countries/components/main-content/main-content.js';
-import '../countries/components/favorites-list/favorites-list.js';
+import '@components/layout/container/container.js';
+import '@countries/components/main-content/main-content.js';
+import '@countries/components/favorites-list/favorites-list.js';
 import style from './countries-page.css?inline';
 export class CountriesPage extends HTMLElement {
     connectedCallback() {

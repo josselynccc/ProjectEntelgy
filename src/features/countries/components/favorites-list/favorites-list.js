@@ -1,4 +1,4 @@
-import FavoriteStore from '../../../../core/store/favorites-store.js';
+import FavoriteStore from '@core/store/favorites-store.js';
 import styles from './favorites-list.css?inline';
 
 export class FavoritesList extends HTMLElement {

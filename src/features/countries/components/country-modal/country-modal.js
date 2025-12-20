@@ -1,5 +1,5 @@
 import styles from './country-modal.css?inline';
-import '../../../../components/ui/modal/modal.js'
+import '@components/ui/modal/modal.js'
 
 export class CountryModal extends HTMLElement {
     constructor() {

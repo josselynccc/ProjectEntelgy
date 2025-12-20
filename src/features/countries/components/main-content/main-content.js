@@ -1,4 +1,4 @@
-import { countryService } from '../../services/countries-service.js';
+import { countryService } from '@countries/services/countries-service.js';
 import styles from './main-content.css?inline';
 import '../country-card/country-card.js';
 export class MainContent extends HTMLElement {

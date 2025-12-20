@@ -1,6 +1,6 @@
 import styles from './country-card.css?inline';
-import '../..//../../components/ui/card/card.js';
-import FavoriteStore from '../../../../core/store/favorites-store.js';
+import '@components/ui/card/card.js';
+import FavoriteStore from '@core/store/favorites-store.js';
 export class CountryCard extends HTMLElement {
     constructor() {
         super();
