@@ -1,6 +1,11 @@
 import styles from './country-modal.css?inline';
 import '@components/ui/modal/modal.js'
-
+import { 
+    formatNumber, 
+    formatLanguagesObjectToString, 
+    formatBorders,
+    formatCurrencies
+} from '../../utils/format.js';
 export class CountryModal extends HTMLElement {
     constructor() {
         super();
@@ -37,6 +42,7 @@ export class CountryModal extends HTMLElement {
         }
 
         this._data = countryData;
+        console.log(this._data)
         this._isFavorite = isFavorite;
         this._isOpen = true;
 
@@ -76,32 +82,6 @@ export class CountryModal extends HTMLElement {
         if (favoriteBadge) {
             favoriteBadge.style.display = this._isFavorite ? 'flex' : 'none';
         }
-    }
-
-    formatNumber(num) {
-        if (!num || isNaN(num)) return 'N/A';
-        return parseInt(num).toLocaleString('es-ES');
-    }
-
-    getCurrencyString(currencies) {
-        if (!currencies) return 'N/A';
-        return Object.values(currencies)
-            .map(curr => `${curr.name} (${curr.symbol || ''})`)
-            .join(', ');
-    }
-
-    getTimezoneString(timezones) {
-        if (!timezones || !timezones.length) return 'N/A';
-        return timezones.join(', ');
-    }
-
-    getBorderString(borders) {
-        if (!borders || !borders.length) return 'Sin fronteras terrestres';
-        return borders.join(', ');
-    }
-
-    getLanguagesString(langs) {
-        return Object.values(langs).join(', ');
     }
 
     connectedCallback() {
@@ -189,7 +169,7 @@ export class CountryModal extends HTMLElement {
                                         <div class="stat-icon">👥</div>
                                         <div class="stat-content">
                                             <div class="stat-label">Población</div>
-                                            <div class="stat-value">${this.formatNumber(this._data.population)}</div>
+                                            <div class="stat-value">${formatNumber(this._data.population)}</div>
                                             <div class="stat-unit">habitantes</div>
                                         </div>
                                     </div>
@@ -198,7 +178,7 @@ export class CountryModal extends HTMLElement {
                                         <div class="stat-icon">🗺️</div>
                                         <div class="stat-content">
                                             <div class="stat-label">Área</div>
-                                            <div class="stat-value">${this.formatNumber(this._data.area)}</div>
+                                            <div class="stat-value">${formatNumber(this._data.area)}</div>
                                             <div class="stat-unit">km²</div>
                                         </div>
                                     </div>
@@ -207,7 +187,7 @@ export class CountryModal extends HTMLElement {
                                         <div class="stat-icon">🗣️</div>
                                         <div class="stat-content">
                                             <div class="stat-label">Idiomas</div>
-                                            <div class="stat-value">${this.getLanguagesString(this._data.languages)}</div>
+                                            <div class="stat-value">${formatLanguagesObjectToString(this._data.languages)}</div>
                                         </div>
                                     </div>
                                     
@@ -215,7 +195,7 @@ export class CountryModal extends HTMLElement {
                                         <div class="stat-icon">💰</div>
                                         <div class="stat-content">
                                             <div class="stat-label">Moneda</div>
-                                            <div class="stat-value">${this.getCurrencyString(this._data.currencies)}</div>
+                                            <div class="stat-value">${formatCurrencies(this._data.currencies)}</div>
                                         </div>
                                     </div>
                                 </div>
@@ -242,7 +222,7 @@ export class CountryModal extends HTMLElement {
                                             </div>
                                             <div class="detail-item">
                                                 <span class="detail-label">Fronteras:</span>
-                                                <span class="detail-value">${this.getBorderString(this._data.borders)}</span>
+                                                <span class="detail-value">${formatBorders(this._data.borders)}</span>
                                             </div>
                                         </div>
                                     </section>

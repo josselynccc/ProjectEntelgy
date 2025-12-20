@@ -1,6 +1,10 @@
 import styles from './country-card.css?inline';
 import '@components/ui/card/card.js';
 import FavoriteStore from '@core/store/favorites-store.js';
+import { 
+    formatNumber, 
+    formatLanguagesObjectToString, 
+} from '../../utils/format.js';
 export class CountryCard extends HTMLElement {
     constructor() {
         super();
@@ -90,15 +94,6 @@ export class CountryCard extends HTMLElement {
                 isFavorite ? 'Remove from favorites' : 'Add to favorites'
             );
         }
-    }
-
-    formatNumber(num) {
-        if (!num || isNaN(num)) return 'N/A';
-        return parseInt(num).toLocaleString('es-ES');
-    }
-
-    getLanguagesString(langs) {
-        return Object.values(langs).join(', ');
     }
 
     showDetails() {
@@ -312,7 +307,7 @@ export class CountryCard extends HTMLElement {
                             <span class="stat-title">Población</span>
                         </div>
                         <div class="stat-value">
-                            ${this.formatNumber(this._country.population)}
+                            ${formatNumber(this._country.population)}
                         </div>
                         <div class="stat-subtitle">habitantes</div>
                     </div>
@@ -323,7 +318,7 @@ export class CountryCard extends HTMLElement {
                             <span class="stat-title">Idioma(s)</span>
                         </div>
                         <div class="stat-value">
-                            ${this.getLanguagesString(this._country.languages)}
+                            ${formatLanguagesObjectToString(this._country.languages)}
                         </div>
                     </div>
                     <span class="divider"></span>
@@ -333,7 +328,7 @@ export class CountryCard extends HTMLElement {
                             <span class="stat-title">Área</span>
                         </div>
                         <div class="stat-value">
-                            ${this.formatNumber(this._country.area)} km²
+                            ${formatNumber(this._country.area)} km²
                         </div>
                     </div>
                 </div>
