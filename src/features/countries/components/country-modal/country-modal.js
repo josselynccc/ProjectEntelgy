@@ -190,6 +190,14 @@ export class CountryModal extends HTMLElement {
                                             <div class="stat-value">${formatLanguagesObjectToString(this._data.languages)}</div>
                                         </div>
                                     </div>
+
+                                    <div class="stat-item">
+                                        <div class="stat-icon">👥</div>
+                                        <div class="stat-content">
+                                            <div class="stat-label">Gentilicio </div>
+                                            <div class="stat-value">${this._data?.demonyms?.eng?.m || this._data?.demonyms?.eng?.f || 'N/A'}</div>
+                                        </div>
+                                    </div>
                                     
                                     <div class="stat-item">
                                         <div class="stat-icon">💰</div>
@@ -208,6 +216,13 @@ export class CountryModal extends HTMLElement {
                                     <section class="detail-section">
                                         <h3 class="section-title">📍 Ubicación</h3>
                                         <div class="detail-content">
+                                            <div class="detail-item">
+                                                <span class="detail-label">Coordenadas Capital:</span>
+                                                <span class="detail-value">
+                                                    ${this._data.capitalInfo.latlng[0]?.toFixed(2) || ''}°N, 
+                                                    ${this._data.capitalInfo.latlng[1]?.toFixed(2) || ''}°E
+                                                </span>
+                                            </div>
                                             <div class="detail-item">
                                                 <span class="detail-label">Continente:</span>
                                                 <span class="detail-value">${this._data.continent || 'N/A'}</span>
