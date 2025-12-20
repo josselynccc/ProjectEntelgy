@@ -17,11 +17,15 @@
     transform: scale(1.05);
 }
 
+.title-favorite-container{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 12px;
+}
+
 .favorite-btn {
-    position: absolute;
-    bottom: 12px;
-    right: 12px;
-    background: rgba(255, 255, 255, 0.9);
+    background: linear-gradient(135deg, #253579 0%, #460785 100%);
     border: none;
     border-radius: 50%;
     width: 40px;

@@ -256,22 +256,22 @@ export class CountryCard extends HTMLElement {
                               loading="lazy">` 
                         : '<div class="flag-placeholder">🏳️</div>'
                     }
-                    
-                    <button class="favorite-btn">
-                        ${this._isFavorite ? '❤️' : '🤍'}
-                    </button>
                 </div>
                 
                 <div slot="content" class="country-content">
                     <div class="country-info">
-                        <h2 class="country-title" 
-                            style="cursor: pointer;"
-                            tabindex="0"
-                            role="button"
-                            aria-label="Ver detalles de ${this._country.name}">
-                            ${this._country.name}
-                        </h2>
-                        
+                        <div class="title-favorite-container">
+                            <h2 class="country-title" 
+                                style="cursor: pointer;"
+                                tabindex="0"
+                                role="button"
+                                aria-label="Ver detalles de ${this._country.name}">
+                                ${this._country.name}
+                            </h2>
+                            <button class="favorite-btn">
+                                ${this._isFavorite ? '❤️' : '🤍'}
+                            </button>
+                        </div>
                         ${this._country.capital ? 
                             `<div class="capital-info">
                                 <span class="icon">🏛️</span>
