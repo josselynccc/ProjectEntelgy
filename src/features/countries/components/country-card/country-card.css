@@ -1,0 +1,74 @@
+.country-header {
+    position: relative;
+    height: 140px;
+    overflow: hidden;
+    display: flex;
+    justify-content: center;
+}
+
+.country-flag {
+    width: auto;
+    height: 100%;
+    object-fit: cover;
+    transition: transform 0.5s ease;
+}
+
+.card:hover .country-flag {
+    transform: scale(1.05);
+}
+
+.favorite-btn {
+    position: absolute;
+    bottom: 12px;
+    right: 12px;
+    background: rgba(255, 255, 255, 0.9);
+    border: none;
+    border-radius: 50%;
+    width: 40px;
+    height: 40px;
+    font-size: 1.2rem;
+    cursor: pointer;
+    transition: all 0.3s;
+}
+
+.favorite-btn:hover {
+    background: white;
+    transform: scale(1.1);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+}
+.country-title {
+    color: #2c3e50;
+    font-size: 1.5rem;
+    font-weight: 700;
+    margin: 0 0 12px 0;
+    line-height: 1.2;
+}
+.skeleton-flag {
+    height: 140px;
+    background: linear-gradient(90deg, #f0f0f0 25%, #e0e0e0 50%, #f0f0f0 75%);
+    background-size: 200% 100%;
+    animation: shimmer 1.5s infinite;
+}
+
+.skeleton-content {
+    padding: 20px;
+}
+
+.stats-container {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    gap: 10px;
+    font-size: small;
+    text-align: center;
+}
+
+.divider {
+    display: inline-block;
+    width: 2px;
+    background-color: #ddd;
+    height: 3em; 
+    margin: 0 12px;
+    vertical-align: middle;
+    opacity: 0.6;
+}

@@ -1,4 +1,5 @@
 import '../../components/layout/container/container.js';
+import '../countries/components/main-content/main-content.js';
 export class CountriesPage extends HTMLElement {
     constructor() {
         super();
@@ -6,9 +7,9 @@ export class CountriesPage extends HTMLElement {
     }
     connectedCallback() {
         this.shadowRoot.innerHTML = `
-            <style>
-            </style>
-            <app-container></app-container>
+            <app-container>
+                <app-main-content></app-main-content>
+            </app-container>
         `;
     }
 }

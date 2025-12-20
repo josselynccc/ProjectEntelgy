@@ -1,0 +1,26 @@
+.countries-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 50px;
+    padding: 50px;
+}
+
+.loading, .error {
+    grid-column: 1 / -1;
+    text-align: center;
+    padding: 48px;
+}
+
+.error {
+    color: #e74c3c;
+}
+
+.retry-btn {
+    margin-top: 16px;
+    padding: 10px 20px;
+    background: #3498db;
+    color: white;
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+}
